@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Automata Visualizer</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Automata Visualizer</h1>
+      <p class="subtitle">
+        Define a machine, type a string, and watch it run one symbol at a time.
+      </p>
+
+      <!-- Tabs (DFA, NFA, ε-NFA, Mealy, Moore) are added by app.js -->
+      <div class="tabs" id="tabs" role="tablist"></div>
+
+      <div class="layout">
+        <!-- LEFT SIDE: the machine definition as a table -->
+        <section class="box">
+          <label>Machine definition</label>
+          <div id="tableArea"></div>
+
+          <details>
+            <summary>Edit as text</summary>
+            <textarea id="definitionText" spellcheck="false"></textarea>
+          </details>
+
+          <p class="hint" id="hint"></p>
+          <p class="error" id="error"></p>
+        </section>
+
+        <!-- RIGHT SIDE: diagram + running the machine -->
+        <section class="box">
+          <div class="button-row">
+            <button id="addStateButton" class="outline">+ State</button>
+            <input
+              type="text"
+              id="arrowSymbol"
+              value="0"
+              aria-label="Symbol for new arrow"
+            />
+            <button id="blankButton" class="outline">Blank</button>
+            <button id="convertButton" hidden>Convert to DFA</button>
+          </div>
+          <p class="hint">
+            Drag states to move them. Tap one state, then another, to add an arrow with
+            the symbol in the box. Double-tap a state to make it accepting.
+          </p>
+
+          <svg
+            id="diagram"
+            viewBox="0 0 560 380"
+            role="img"
+            aria-label="State diagram"
+          ></svg>
+
+          <label for="inputString">Input string</label>
+          <input type="text" id="inputString" autocomplete="off" spellcheck="false" />
+
+          <div class="button-row">
+            <button id="stepButton">Step</button>
+            <button id="runButton">Run</button>
+            <button id="resetButton" class="outline">Reset</button>
+          </div>
+
+          <div class="tape" id="tape" aria-live="polite"></div>
+          <div class="output-line" id="outputLine"></div>
+          <div class="verdict" id="verdict"></div>
+          <div class="explanation" id="explanation"></div>
+        </section>
+      </div>
+
+      <!-- Shows the NFA -> DFA or Mealy <-> Moore conversion table -->
+      <section class="box spaced" id="conversionBox" hidden></section>
+
+      <!-- Practice quiz -->
+      <section class="box spaced">
+        <label for="quizSelect">Practice: build a machine for this language</label>
+        <div class="button-row">
+          <select id="quizSelect"></select>
+          <button id="checkButton">Check my machine</button>
+        </div>
+        <p class="hint">
+          Tap Blank, add states, connect them, then check. A wrong answer loads the
+          shortest failing string.
+        </p>
+        <div class="verdict" id="quizResult"></div>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
